@@ -90,7 +90,7 @@ public class SMSClassifier {
       classifier.buildClassifier(trainData);
       Evaluation eval = new Evaluation(trainData);
       eval.evaluateModel(classifier, trainData);
-      System.out.println(eval.toSummaryString());
+      System.out.println(eval.toSummaryString("\nTraining result\n======\n", true));
       System.out.println("Training process complete.");
       saveModel(classifier, modelName);
       System.out.println("Updated model saved to " + modelName + "\n");

@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class StartWeka {
 
   public static void main(String[] args) throws Exception {
-    System.out.println("===== SMS Spam Assassin =====\n\n");
+    System.out.println("===== SMS Spam Assassin =====\n");
     System.out.println("Welcome! Type 'h' or 'help' for a list of available commands");
     boolean running = true;
     boolean initialized = false;
@@ -23,24 +23,18 @@ public class StartWeka {
           System.out.println("- 'initialize [modelName]'");
           System.out.println("    Initialize model name used by spam assassin");
           System.out.println("    # modelName = string");
-          System.out.println("- 'train'");
-          System.out.println("    Start training for spam assassin based on initialization");
+          System.out.println("- 'train [trainingDataset'");
+          System.out.println("    Start training for spam assassin based on the path of training data");
+          System.out.println("    # trainingDataset = string");
           System.out.println("- 'evaluate [SMS]");
           System.out.println("    Generate a verdict toward the SMS input");
           System.out.println("    # SMS = string");
           System.out.println("- 'quit'");
           System.out.println("    Exit the program\n");
-        } else if (tokenized[0].equalsIgnoreCase("t") || tokenized[0].equalsIgnoreCase("train")) {
-          if (initialized) {
-            evaluator.train("data/sms.arff");
-          } else {
-            System.out.println("Please initialize the program before proceeding.\n");
-          }
-        }
-        else if (tokenized[0].equalsIgnoreCase("q") || tokenized[0].equalsIgnoreCase("quit")) {
+        } else if (tokenized[0].equalsIgnoreCase("q") || tokenized[0].equalsIgnoreCase("quit")) {
           running = false;
         } else {
-          System.out.println("Invalid command");
+          System.out.println("ERROR: Invalid command\n");
         }
       } else if (tokenized.length >= 2) {
         if (tokenized[0].equalsIgnoreCase("i") || tokenized[0].equalsIgnoreCase("initialize") && tokenized.length == 2) {
@@ -53,8 +47,19 @@ public class StartWeka {
           if (!modelExist) {
             System.out.println("WARNING: New model selected, please use 'train' command before proceeding\n");
           }
-        }
-        else if (tokenized[0].equalsIgnoreCase("e") || tokenized[0].equalsIgnoreCase("evaluate")) {
+        } else if (tokenized[0].equalsIgnoreCase("t") || tokenized[0].equalsIgnoreCase("train")) {
+          if (initialized) {
+            File trainData = new File("data/" + tokenized[1] + ".arff");
+            if (trainData.exists() && !trainData.isDirectory()) {
+              System.out.println("Training process using data from data/"+ tokenized[1] + ".arff");
+              evaluator.train("data/" + tokenized[1] + ".arff");
+            } else {
+              System.out.println("ERROR: Training file data/" + tokenized[1] + ".arff not found\n");
+            }
+          } else {
+            System.out.println("ERROR: Please initialize the program before proceeding.\n");
+          }
+        } else if (tokenized[0].equalsIgnoreCase("e") || tokenized[0].equalsIgnoreCase("evaluate")) {
           if (initialized) {
             StringBuilder SMS = new StringBuilder();
             for (int i=1; i<tokenized.length; i++) {
@@ -65,11 +70,11 @@ public class StartWeka {
             evaluator.evaluateSMS(SMS.toString());
           }
           else {
-            System.out.println("Please initialize the program before proceeding.\n");
+            System.out.println("ERROR: Please initialize the program before proceeding.\n");
           }
         }
         else {
-          System.out.println("Invalid command");
+          System.out.println("ERROR: Invalid command\n");
         }
       }
     }
