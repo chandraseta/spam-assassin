@@ -20,16 +20,16 @@ public class StartWeka {
       if (tokenized.length == 1) {
         if (tokenized[0].equalsIgnoreCase("h") || tokenized[0].equalsIgnoreCase("help")) {
           System.out.println("== Available Commands ==");
-          System.out.println("- 'initialize [modelName]'");
+          System.out.println("- initialize [modelName]");
           System.out.println("    Initialize model name used by spam assassin");
           System.out.println("    # modelName = string");
-          System.out.println("- 'train [trainingDataset'");
+          System.out.println("- train [trainingDataset]");
           System.out.println("    Start training for spam assassin based on the path of training data");
           System.out.println("    # trainingDataset = string");
-          System.out.println("- 'evaluate [SMS]");
+          System.out.println("- evaluate [SMS]");
           System.out.println("    Generate a verdict toward the SMS input");
           System.out.println("    # SMS = string");
-          System.out.println("- 'quit'");
+          System.out.println("- quit");
           System.out.println("    Exit the program\n");
         } else if (tokenized[0].equalsIgnoreCase("q") || tokenized[0].equalsIgnoreCase("quit")) {
           running = false;
