@@ -3,8 +3,19 @@ package main.java;
 import java.io.File;
 import java.util.Scanner;
 
+/**
+ * This class is the interface, albeit in the form of simple CLI (Command Line Interface), of the
+ * Spam Assassin. Nothing too technical here, just a simple and clean interface.
+ *
+ * @author Rionaldi Chandraseta
+ */
 public class StartWeka {
 
+  /**
+   * Main program, creates and uses object from <code>SMSClassifier</code>class.
+   * @param args Unused.
+   * @throws Exception Probable file not found exception.
+   */
   public static void main(String[] args) throws Exception {
     System.out.println("===== SMS Spam Assassin =====\n");
     System.out.println("Welcome! Type 'h' or 'help' for a list of available commands");
@@ -39,11 +50,11 @@ public class StartWeka {
       } else if (tokenized.length >= 2) {
         if (tokenized[0].equalsIgnoreCase("i") || tokenized[0].equalsIgnoreCase("initialize") && tokenized.length == 2) {
           initialized = true;
-          evaluator.setModelName("build/model/" + tokenized[1] + ".dat");
-          File model = new File("build/model/" + tokenized[1] + ".dat");
+          evaluator.setModelName("model/" + tokenized[1] + ".dat");
+          File model = new File("model/" + tokenized[1] + ".dat");
           boolean modelExist = (model.exists() && !model.isDirectory());
           System.out.println("Initialization complete");
-          System.out.println("Model is set to build/model/" + tokenized[1] + ".dat\n");
+          System.out.println("Model is set to model/" + tokenized[1] + ".dat\n");
           if (!modelExist) {
             System.out.println("WARNING: New model selected, please use 'train' command before proceeding\n");
           }
